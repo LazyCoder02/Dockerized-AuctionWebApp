@@ -1,0 +1,5 @@
+we want to be able to add a user first
+1. Add user - person should be able to register or logging
+2. edit user - user should be able to edit their information name etc
+3. deleteUser - rest api system should be able to remove user off of the app
+4.retrieveInfo - rest api should retreive user info when asked

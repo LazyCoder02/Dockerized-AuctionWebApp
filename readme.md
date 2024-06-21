@@ -4,11 +4,6 @@ This repository contains the code for a simple auction web application, consisti
 - The backend API built with Node.js and Express.
 - The frontend application built with React.
 
-## Directory Structure
-`AuctionWebAPP
-├── auction-api
-└── auction-app`
-
 ## Getting Started
 
 ### Prerequisites

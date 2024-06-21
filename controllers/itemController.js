@@ -29,6 +29,13 @@ exports.getAllItems = (req, res) => {
   });
 };
 
+exports.getAllUsersItems = (req, res) => {
+  Item.getAllUsersItems(req.params.userId, (err, items) => {
+    if (err) return res.status(400).json({ error: err.message });
+    res.json(items);
+  });
+};
+
 const getItemById = (id, callback) => {
   Item.getItem(id, (err, item) => {
     if (err) {

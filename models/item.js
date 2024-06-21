@@ -3,13 +3,13 @@ const createProduct = require('./createProduct');
 
 class Item {
   static async addItem(item, callback) {
-    const { name, quantity, price, category, description } = item;
+    const { name, quantity, price, category, description, userID } = item;
     try {
       const result = await createProduct(name, description, price);
 
       const sql =
-        " INSERT INTO auction (productName, quantity, pricePerUnit, productCategory, productDescription, stripePriceID) VALUES (?, ?, ?, ?, ?, ?)";
-      db.run(sql, [name, quantity, price, category, description, result.productPrice.id], function(err) {
+        " INSERT INTO auction (productName, quantity, pricePerUnit, productCategory, productDescription, stripePriceID, userID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      db.run(sql, [name, quantity, price, category, description, result.productPrice.id, userID], function(err) {
         if (err) {
           callback(err, null);
         } else {
@@ -34,6 +34,14 @@ class Item {
       callback(err, rows);
     });
   }
+
+  static getAllUsersItems(userId, callback) {
+    const sql = "SELECT * FROM auction WHERE userID = ?";
+    db.all(sql, [userId], (err, rows) => {
+      callback(err, rows);
+    });
+  }
+
 
   static editItem(id, item, callback) {
     const { name, quantity, price, category, description } = item;

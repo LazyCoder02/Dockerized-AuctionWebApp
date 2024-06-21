@@ -20,7 +20,9 @@ db.serialize(() => {
             productCategory TEXT NOT NULL,
             productDescription TEXT NOT NULL,
             stripePriceID TEXT NOT NULL,
-            createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+            createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+            userID INTEGER NOT NULL,
+            FOREIGN KEY (userID) REFERENCES users(id)
         )
     `);
 });

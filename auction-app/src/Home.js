@@ -69,6 +69,10 @@ const Navbar = () => {
     navigate("/register");
   };
 
+  const handleItems = () => {
+    navigate("/manage-items");
+  };
+
   const handleLogOut = () => {
     dispatch(logoutUser());
     toast({
@@ -219,6 +223,7 @@ const Navbar = () => {
                       </ModalContent>
                     </Modal>
                   </>
+                  <MenuItem onClick={handleItems}>Manage items</MenuItem>
                 </MenuGroup >
                 <MenuDivider />
                 <MenuGroup >
@@ -368,8 +373,53 @@ const ItemCard = ({ item }) => {
   );
 };
 
+const UserItemCard = ({ item }) => {
+  const [thisItem, setThisItem] = useState(1);
+
+  return (
+    <Card
+      width="350px"
+      margin="2"
+      borderWidth={1}
+      borderColor={"gray.200"}
+      borderRadius="lg"
+      boxShadow="lg"
+    >
+      <CardHeader>
+        <Text size="md">{item.productCategory}</Text>
+      </CardHeader>
+      <Divider />
+      <CardBody>
+        <Stack mt="3" spacing="3">
+          <Heading size="md">{item.productName}</Heading>
+          <Text>{item.productDescription}</Text>
+          <Text fontSize="sm">
+            Available items: {item.quantity}
+          </Text>
+          <Text color="blue.600" fontSize="xl">
+            ${item.pricePerUnit} / unit
+          </Text>
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter>
+        <Stack mt="3" spacing="3" w="100%">
+          <NumberInput defaultValue={thisItem} min={1} max={item.quantity} w="100%" onChange={setThisItem}>
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </Stack>
+      </CardFooter>
+    </Card>
+  );
+};
+
 const AddItemForm = () => {
   const toast = useToast();
+  const user = useSelector((state) => state.user);
 
   const handleSubmition = async (e) => {
     e.preventDefault();
@@ -380,6 +430,7 @@ const AddItemForm = () => {
       price: formData.get("pricePerUnit"),
       category: formData.get("productCategory"),
       description: formData.get("productDescription"),
+      userID: user.id
     };
 
     try {
@@ -481,7 +532,28 @@ const AddItemForm = () => {
 
 const Options = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const user = useSelector((state) => state.user);
   const [items, setItems] = useState([]);
+  const [userItems, setUserItems] = useState([]);
+
+  useEffect(() => {
+    // Fetch user items from the backend
+    const fetchUserItems = async () => {
+      try {
+        const response = await fetch(`http://localhost:3030/api/items/${user.id}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Fetched user items:", data);
+        setUserItems(data);
+      } catch (error) {
+        console.error("Error fetching user items:", error);
+      }
+    };
+
+    fetchUserItems();
+  }, [user.id]);
 
   useEffect(() => {
     // Fetch items from the backend
@@ -519,7 +591,15 @@ const Options = () => {
           </TabPanel>
           <TabPanel>
             {isLoggedIn ? (
-              <AddItemForm />
+              <Box>
+                <AddItemForm />
+                {userItems.length > 0 ? (
+                  userItems.map((item) => <UserItemCard key={item.productID} item={item} />)
+                ) : (
+                  <Text>No items available</Text>
+                )}
+
+              </Box>
             ) : (
               <Box
                 p={4}

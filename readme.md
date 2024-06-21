@@ -5,9 +5,9 @@ This repository contains the code for a simple auction web application, consisti
 - The frontend application built with React.
 
 ## Directory Structure
-AuctionWebAPP
+`AuctionWebAPP
 ├── auction-api
-└── auction-app
+└── auction-app`
 
 ## Getting Started
 

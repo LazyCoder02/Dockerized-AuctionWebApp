@@ -1,0 +1,22 @@
+FROM --platform=linux/amd64 node:18-alpine
+
+WORKDIR /usr/src/app
+
+# Install build dependencies
+RUN apk add --no-cache python3 make g++ gcc
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies for linux/amd64
+RUN npm install --platform=linuxmusl --arch=x64
+
+# Copy the rest of the application
+COPY . .
+
+# Rebuild sqlite3 if you're using it
+RUN npm rebuild sqlite3 --target_platform=linux --target_arch=x64
+
+EXPOSE 3030
+
+CMD ["node", "app.js"]

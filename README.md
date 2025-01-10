@@ -24,7 +24,7 @@ Make sure you have the following installed on your machine:
 
 ```bash
 # Clone the repository
-https://github.com/your-username/auction-web-app.git
+https://github.com/LazyCoder02/auction-web-app.git
 cd auction-web-app
 ```
 
@@ -33,7 +33,7 @@ cd auction-web-app
 Run the following command in the root directory (where the `docker-compose.yml` file is located):
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 This will:

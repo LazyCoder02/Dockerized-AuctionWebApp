@@ -24,7 +24,7 @@ Make sure you have the following installed on your machine:
 
 ```bash
 # Clone the repository
-https://github.com/LazyCoder02/auction-web-app.git
+https://github.com/LazyCoder02/Dockerized-AuctionWebApp.git
 cd auction-web-app
 ```
 

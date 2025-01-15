@@ -25,7 +25,7 @@ Make sure you have the following installed on your machine:
 ```bash
 # Clone the repository
 https://github.com/LazyCoder02/Dockerized-AuctionWebApp.git
-cd auction-web-app
+cd Dockerized-AuctionWebApp
 ```
 
 ### 2. Build and Start Containers

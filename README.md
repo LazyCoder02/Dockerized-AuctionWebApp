@@ -127,6 +127,9 @@ To test the backend API, use a tool like [Postman](https://www.postman.com/) or 
   ```
 
 ---
+## Project done by:
+1. Rafael Escrivao Junior
+2. Ahmet Gunes
 
 ## Happy Bidding! 🚀
 
